@@ -3,6 +3,8 @@ import { AudioAnalyser } from "three"
 export default class AudioPlayer {
 
     $audio: HTMLAudioElement
+    $audios: HTMLAudioElement[]
+    currentTrack: number
     audioContext: AudioContext
     $playerControls: {
         backward: Element,
@@ -14,40 +16,62 @@ export default class AudioPlayer {
     emitter: EventTarget
 
     constructor() {
-        this.$audio = document.querySelector('audio')
+        this.currentTrack = 0
+        this.$audios = [
+            new Audio(),
+            new Audio(),
+            new Audio()
+        ]
         this.$playerControls = {
             backward: document.querySelector('.audio-controls .backward'),
             play: document.querySelector('.audio-controls .play'),
             forward: document.querySelector('.audio-controls .forward')
         }
-        this.bindAudioControls()
-        this.createAudioAnalyzer()
+        // this.bindAudioControls()
+        // this.createAudioAnalyzer()
         this.emitter = new EventTarget()
+    }
+
+    addSource = () => {
+
+        this.$audios.forEach(a =>{ a.preload = 'metadata' })
+
+        const sources = [
+            './media/episode_1.mp3',
+            './media/episode_2.m4a',
+            './media/episode_3.mp3',
+        ]
+
+        sources.forEach((s, i) => {
+            this.$audios[i].src = s
+            // this.$audios[i].load()
+            this.$audios[i].onlo
+        })
     }
 
     bindAudioControls = () => {
         this.$playerControls.backward.addEventListener('click', () => {
-            this.$audio.currentTime -= 10
+            this.$audios[this.currentTrack].currentTime -= 10
         })
         this.$playerControls.play.addEventListener('click', () => {
-            if ( this.$audio.paused ) {
+            if ( this.$audios[this.currentTrack].paused ) {
                 this.audioContext.state === 'suspended' ? this.audioContext.resume() : null;
-                this.$audio.play()
+                this.$audios[this.currentTrack].play()
                 this.$playerControls.play.textContent = '||'
             } else {
-                this.$audio.pause()
+                this.$audios[this.currentTrack].pause()
                 this.$playerControls.play.textContent = '|>'
                 this.emitter.dispatchEvent(new Event('pause'))
             }
         })
         this.$playerControls.forward.addEventListener('click', () => {
-            this.$audio.currentTime += 10
+            this.$audios[this.currentTrack].currentTime += 10
         })
     }
 
     createAudioAnalyzer = () => {
         this.audioContext = new AudioContext
-        const track = this.audioContext.createMediaElementSource(this.$audio)
+        const track = this.audioContext.createMediaElementSource(this.$audios[this.currentTrack])
         this.analyzer = this.audioContext.createAnalyser()
         track.connect(this.analyzer).connect(this.audioContext.destination)
 

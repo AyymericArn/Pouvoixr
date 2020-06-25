@@ -3,6 +3,7 @@ import TWEEN from "@tweenjs/tween.js"
 import Shapes from "./Shapes"
 import AudioPlayer from "./AudioPlayer"
 import MagneticButtons from "./MagneticButtons"
+import Loader from "./Loader"
 import withSpeechCommands from "./withSpeechCommands"
 import particlesData from "./particles.json"
 require("particles.js")
@@ -93,7 +94,7 @@ export default class Engine {
         this.audioPlayer = audioPlayer
         this.buttonsMagnetism = []
 
-        this.setupParticles()
+        // this.setupParticles()
 
         this.listenPause()
 
@@ -103,7 +104,7 @@ export default class Engine {
 
         this.setupIntro()
 
-        this.animate()
+        // this.animate()
     }
     
     animate = () => {
@@ -114,12 +115,12 @@ export default class Engine {
 
         // keep track of frame number to give custom rythm to animations
         this.state.frameCounter === 60 ? this.state.frameCounter = 0 : this.state.frameCounter++
-        if (!this.audioPlayer.$audio.paused && this.state.frameCounter % 2 === 0) {
+        if (!this.audioPlayer.$audios[this.state.step].paused && this.state.frameCounter % 2 === 0) {
             this.shapes.warpVertices( this.audioPlayer.waveform, this.state.step )
         }
 
         // this needs to be done at each frame for animation smoothness
-        if (!this.audioPlayer.$audio.paused) {
+        if (!this.audioPlayer.$audios[this.state.step].paused) {
             this.shapes.updateShapeVertices( this.state.step )
         }
         this.audioPlayer.analyzer.getFloatTimeDomainData(this.audioPlayer.waveform)
@@ -137,6 +138,8 @@ export default class Engine {
             tween.easing(TWEEN.Easing.Cubic.InOut)
             tween.start()
 
+            this.audioPlayer.currentTrack--
+
             this.$el.pannel.classList.add('changing-step')
             setTimeout(() => {
                 this.$el.pannel.classList.remove('changing-step')
@@ -150,6 +153,8 @@ export default class Engine {
             const tween = new TWEEN.Tween(this.camera.position).to(cameraStates[this.state.step], 2000)
             tween.easing(TWEEN.Easing.Cubic.InOut)
             tween.start()
+
+            this.audioPlayer.currentTrack++
 
             this.$el.pannel.classList.add('changing-step')
             setTimeout(() => {
@@ -249,4 +254,6 @@ export default class Engine {
     }
 }
 
-withSpeechCommands(new Engine(new Shapes(), new AudioPlayer))
+new Loader(
+    withSpeechCommands(new Engine(new Shapes(), new AudioPlayer))
+)

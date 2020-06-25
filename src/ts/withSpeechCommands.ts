@@ -22,22 +22,22 @@ export default function withSpeechCommands (engine: Engine) {
 
             case 'lecture':
                 engine.audioPlayer.audioContext.state === 'suspended' ? engine.audioPlayer.audioContext.resume() : null;
-                engine.audioPlayer.$audio.play()
+                engine.audioPlayer.$audios[engine.state.step].play()
                 engine.audioPlayer.$playerControls.play.textContent = '||'
                 break;
                 
             case 'pause':
-                engine.audioPlayer.$audio.pause()
+                engine.audioPlayer.$audios[engine.state.step].pause()
                 engine.audioPlayer.$playerControls.play.textContent = '|>'
                 engine.audioPlayer.emitter.dispatchEvent(new Event('pause'))
                 break;
                 
             case 'reculer':
-                engine.audioPlayer.$audio.currentTime -= 10
+                engine.audioPlayer.$audios[engine.state.step].currentTime -= 10
                 break;
                 
             case 'avancer':
-                engine.audioPlayer.$audio.currentTime += 10
+                engine.audioPlayer.$audios[engine.state.step].currentTime += 10
                 break;
 
             // // @ts-ignore
@@ -69,4 +69,6 @@ export default function withSpeechCommands (engine: Engine) {
     recognition.addEventListener('end', recognition.start)
 
     recognition.start()
+
+    return engine
 }

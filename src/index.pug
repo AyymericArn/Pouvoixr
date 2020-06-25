@@ -10,6 +10,10 @@ head
   link(rel='stylesheet' href='./styles/style.styl')
 
 body
+  .loader
+    span Chargement...
+    .progress-bar
+
   .intro
     h1 Pouvoix’R : La voix au service de l’inclusion
     em Bienvenue dans ce livre audio qui va vous expliquer plein de trucs
@@ -22,16 +26,18 @@ body
       .content
         h3 #{d[0].title}
         p #{d[0].content}
-      audio(src="./media/episode_1.mp3")
+      //- audio(preload="metadata" src="./media/episode_1.mp3")
+      //- audio(preload="metadata" src="./media/episode_2.m4a")
+      //- audio(preload="metadata" src="./media/episode_3.mp3")
           Your browser does not support the
           <code>audio</code> element.
       .audio-controls
         button.backward
-          img(src="media/img/backward.svg", alt="< 10 sec")
+          img(src="media/img/backward.svg", alt="< 10 sec" loading="lazy")
         button.play
-          img(src="media/img/icon.svg", alt="Play.")
+          img(src="media/img/icon.svg", alt="Play." loading="lazy")
         button.forward
-          img(src="media/img/forward.svg", alt="10 sec >")
+          img(src="media/img/forward.svg", alt="10 sec >" loading="lazy")
 
     .controls
       .inner
