@@ -76,6 +76,9 @@ export default class Engine {
         }
 
         this.renderer.setSize(window.innerWidth, window.innerHeight)
+        this.renderer.domElement.classList.add('three-scene')
+        // @ts-expect-error
+        this.renderer.domElement.style = `width: 100%; height: 100%;`
         document.body.appendChild( this.renderer.domElement )
         
         window.addEventListener("resize", () => {
@@ -94,7 +97,7 @@ export default class Engine {
         this.audioPlayer = audioPlayer
         this.buttonsMagnetism = []
 
-        // this.setupParticles()
+        this.setupParticles()
 
         this.listenPause()
 
@@ -205,7 +208,7 @@ export default class Engine {
     }
 
     setupIntro = () => {
-        const $scene = document.querySelector('canvas')
+        const $scene = document.querySelector('.three-scene')
         $scene.classList.add('invisible')
         const $start = document.querySelector('.intro button')
         $start.addEventListener('click', () => {
@@ -220,7 +223,7 @@ export default class Engine {
             $intro.classList.add('vanished')
         }, 1500);
         const $app = document.querySelector('.app')
-        const $scene = document.querySelector('canvas')
+        const $scene = document.querySelector('.three-scene')
         $app.classList.remove('invisible')
         $scene.classList.remove('invisible')
         const tween = new TWEEN.Tween(this.camera.position).to(cameraStates[0], 1500)

@@ -19,9 +19,12 @@
   },
   "dependencies": {
     "@tweenjs/tween.js": "^18.5.0",
+    "@types/preloadjs": "^0.6.32",
     "@types/tween.js": "^18.5.1",
     "es6-tween": "^5.5.11",
     "particles.js": "^2.0.0",
+    "preload-js": "^0.6.3",
+    "preloadjs": "^1.0.1",
     "three": "^0.117.1"
   }
 }

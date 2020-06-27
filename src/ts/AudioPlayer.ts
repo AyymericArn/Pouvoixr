@@ -1,4 +1,7 @@
 import { AudioAnalyser } from "three"
+const audio1src = require("../media/episode_1.mp3")
+const audio2src = require("../media/episode_2.m4a")
+const audio3src = require("../media/episode_3.mp3")
 
 export default class AudioPlayer {
 
@@ -34,18 +37,17 @@ export default class AudioPlayer {
 
     addSource = () => {
 
-        this.$audios.forEach(a =>{ a.preload = 'metadata' })
+        // this.$audios.forEach(a =>{ a.preload = 'metadata' })
 
         const sources = [
-            './media/episode_1.mp3',
-            './media/episode_2.m4a',
-            './media/episode_3.mp3',
+            audio1src,
+            audio2src,
+            audio3src,
         ]
 
         sources.forEach((s, i) => {
             this.$audios[i].src = s
-            // this.$audios[i].load()
-            this.$audios[i].onlo
+            this.$audios[i].load()
         })
     }
 

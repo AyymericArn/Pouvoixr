@@ -6,7 +6,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
   // <link rel='icon' type='image/png' href='images/favicon.png'>
-  link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Basic&family=Alike&family=Alike+Angular&display=swap')
+  //- link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Basic&family=Alike&family=Alike+Angular&display=swap')
   link(rel='stylesheet' href='./styles/style.styl')
 
 body
@@ -33,15 +33,15 @@ body
           <code>audio</code> element.
       .audio-controls
         button.backward
-          img(src="media/img/backward.svg", alt="< 10 sec" loading="lazy")
+          img(src="media/img/backward.svg", alt="< 10 sec")
         button.play
-          img(src="media/img/icon.svg", alt="Play." loading="lazy")
+          img(src="media/img/icon.svg", alt="Play.")
         button.forward
-          img(src="media/img/forward.svg", alt="10 sec >" loading="lazy")
+          img(src="media/img/forward.svg", alt="10 sec >")
 
     .controls
       .inner
         button.previous précedent
         button.next next
-script(type='x-shader/x-fragment' src='ts/vertexShader.vert' id="vertexShader")
-script(type='text/javascript' src='ts/app.ts')
+//- script(type='x-shader/x-fragment' src='ts/vertexShader.vert' id="vertexShader")
+script(type='text/javascript' src='ts/app.ts' defer)

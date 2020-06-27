@@ -7,7 +7,11 @@ export default function withSpeechCommands (engine: Engine) {
     const recognition = new SpeechRecognition()
     recognition.interimResults = false
 
+    console.log('couilles')
+
     recognition.addEventListener('result', e => {
+        console.log('proute');
+        
         const transcript = Array.from(e.results)
             .map(res => res[0])
             .map(res => res.transcript)
