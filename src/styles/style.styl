@@ -17,6 +17,18 @@ canvas
     z-index: 0
 
 .particles
+    z-index 2 
+
+#waveform
+    width: 100%
+    overflow hidden
+    wave
+        overflow hidden !important
+
+    canvas
+        z-index 55
+
+.particles
     position absolute
     z-index: 0
     top 0
@@ -50,11 +62,37 @@ canvas
     .progress-bar
         width: 100%
         height 2px
-        background: white
+        // background: white
         margin-top 80px
         transform-origin: left 
         transform scaleX(0)
+        will-change: transform
         transition: transform 0.3s ease
+        position relative
+
+        &::before
+            content ''
+            height 100%
+            left 0
+            top 0
+            width: 100%
+            position absolute
+            z-index: 5
+            background-image: linear-gradient(transparent, #ffffff, #ffffff, transparent)
+            filter blur(1px)
+
+        &::after
+            content ''
+            height 12px
+            right 0px
+            top -5px
+            width: 200px
+            position absolute
+            z-index: -5
+            opacity 1
+            filter: blur(2px)
+            background-image: radial-gradient(ellipse at right, #ddddff, transparent, transparent)
+            
 
 .intro 
     width: 100vw
@@ -88,13 +126,54 @@ canvas
         text-align: center;
 
     button
+        position relative
         margin-top 50px
+        height 50px
+        width 50px
+        border-radius: 50%
+        border none
+        cursor: pointer
+        animation: rotate-text 6s linear infinite
+
+    label
+        
+        text-transform: capitalize
+        color white
+        // position absolute
+        // top: 40%
+        // left -25%
+        position: relative
+        left: -10px
+        top -50px
+        for i in 0..9
+            .char{i}
+                cursor: pointer
+                transform: rotate((i * (160 / 9))deg)
+
+        // rotated-text(9, 360deg)
+        span 
+            position: absolute;
+            width: 20px;
+            left: 0;
+            top: 0;
+            transform-origin: bottom center;
+            height: 50px;
 
 .invisible
     opacity 0
 
 .vanished
     z-index -20
+
+.pannel-wrapper
+    position absolute
+    top 0
+    left 0
+    width: 100vw
+    height 100vh
+    display flex
+    justify-content: center
+    align-items: center
 
 .pannel
     position absolute
@@ -111,6 +190,7 @@ canvas
     justify-content: space-between
     align-items: center
     z-index: 1
+    min-width: 600px
 
     .content
         h3
@@ -120,6 +200,9 @@ canvas
             font-family 'Alike Angular', serif
             font-size: 16px
             line-height: 20px
+
+    .content, #waveform, .audio-controls
+        transition: opacity 0.5s ease
 
     .audio-controls
         display: flex
@@ -193,10 +276,38 @@ canvas
     animation-timing-function cubic-bezier(.41,.31,.45,.74)
     animation-iteration-count 1
 
-.changing-step-content
+.fold
+    animation: fold 0.9s
+    animation-timing-function cubic-bezier(.41,.31,.45,.74)
+    animation-fill-mode: forwards
+    animation-iteration-count 1
+
+.unfold
+    animation: unfold 0.9s
+    animation-timing-function cubic-bezier(.41,.31,.45,.74)
+    animation-fill-mode: forwards
+    animation-iteration-count 1
+
+.changing-step .content, .changing-step #waveform, .changing-step .audio-controls
     animation fade 2s
     animation-timing-function cubic-bezier(.41,.31,.45,.74)
     animation-iteration-count 1
+
+.fold .content, .fold #waveform, .fold .audio-controls
+    animation half-fade 0.15s
+    animation-timing-function cubic-bezier(.41,.31,.45,.74)
+    animation-iteration-count 1
+    animation-fill-mode: forwards
+
+.unfold .content, .unfold #waveform, .unfold .audio-controls
+    opacity: 1
+
+.unfold .content, .unfold #waveform, .unfold .audio-controls
+    animation fade 1s
+    animation-timing-function cubic-bezier(.41,.31,.45,.74)
+    animation-iteration-count 1
+    animation-direction: reverse
+    animation-fill-mode: forwards
 
 .controls
     display: flex
@@ -220,12 +331,72 @@ canvas
         .previous
             margin-right: 2vw
 
+.help
+    position: absolute
+    height: 100%
+    display: flex
+    // flex-direction: column
+    // justify-content: center
+    align-items: center
+    width: 20vw
+    min-width: 300px
+    transition: transform 1s ease-out
+    transform: translateX(-18vw)
+    z-index: 30
+
+    ul
+        padding: 20px 40px
+        list-style: none
+        strong
+            display: block
+            margin-top: 15px
+
+    button.toggle
+        cursor: pointer
+        z-index: 30
+
+.revealed
+    transform: translateX(0) !important
+
+@media screen and (max-width: 1024px)
+    .controls
+        .inner
+            margin-left: auto
+            margin-right: auto
+
+@media screen and (max-width: 976px)
+    .pannel
+        position: relative
+        right: 0
+        top 0
+@media screen and (max-width: 976px)
+    .pannel
+        width: 90%
+
+@media screen and (max-width: 1240px)
+    .help
+        background-color: #000000aa
+        color: #ccc
+        transform: translateX(-260px)
+
 @keyframes fold-and-unfold {
     0% { transform: scale(1, 1); }
     25% { transform: scale(0.01, 1); }
     45% { transform: scale(0.01, 0.01); }
     55% { transform: scale(0.01, 0.01); }
     75% { transform: scale(0.01, 1); }
+    100% { transform: scale(1, 1); }
+}
+
+@keyframes fold {
+    0% { transform: scale(1, 1); }
+    50% { transform: scale(0.01, 1); }
+    100% { transform: scale(0.01, 0.01); }
+}
+
+@keyframes unfold {
+    0% { transform: scale(0.01, 0.01); }
+    50% { transform: scale(0.01, 1); }
     100% { transform: scale(1, 1); }
 }
 
@@ -236,6 +407,12 @@ canvas
     100% { opacity: 1}
 }
 
+// little hack cuz im tired
+@keyframes half-fade {
+    0% { opacity: 1}
+    100% { opacity: 0}
+}
+
 @keyframes space-letters {
     0% { letter-spacing: 3px }
     1% { letter-spacing: 3px }
@@ -243,4 +420,16 @@ canvas
     100% { letter-spacing: 5px }
 }
 
+@keyframes rotate-text {
+    from { transform: rotate(0deg) }
+    to { transform: rotate(360deg) }
+}
+
 .audio-controls {}
+
+// rotated-text($num-letters, $angle-span, $angle-offset = 0deg)
+//   $angle-per-char = $angle-span / $num-letters;
+//   for $i in $num-letters
+//     $angle = $angle-offset + $angle-per-char * $i
+//     .char{$i} 
+//       transform rotate(($angle)deg)

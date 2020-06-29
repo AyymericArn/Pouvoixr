@@ -36,7 +36,8 @@ export default class MagneticButtons {
             scale: 1.2
         }
 
-        document.addEventListener('mousemove', this.mouseMove)
+        document.addEventListener('mousemove', this.mouseMove, false)
+        window.addEventListener('resize', this.resize)
     }
 
     mouseMove = ({ pageX, pageY }) => {
@@ -50,6 +51,9 @@ export default class MagneticButtons {
     }
     
     resize = () => {
+        if (window.innerWidth < 1920) {
+            document.removeEventListener('mousemove', this.mouseMove, false)
+        }
         Object.assign(this.state, {
             bounds: this.button.getBoundingClientRect(),
             width: window.innerWidth,

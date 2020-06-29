@@ -1,4 +1,5 @@
 import { AudioAnalyser } from "three"
+import Wavesurfer from "wavesurfer.js"
 const audio1src = require("../media/episode_1.mp3")
 const audio2src = require("../media/episode_2.m4a")
 const audio3src = require("../media/episode_3.mp3")
@@ -8,23 +9,27 @@ export default class AudioPlayer {
     $audio: HTMLAudioElement
     $audios: HTMLAudioElement[]
     currentTrack: number
+    currentTimes: number[]
     audioContext: AudioContext
+    track: MediaElementAudioSourceNode
     $playerControls: {
         backward: Element,
         play: Element,
         forward: Element,
     }
-    analyzer: AnalyserNode
+    analyzer: AnalyserNode[]
     waveform: Float32Array
     emitter: EventTarget
 
     constructor() {
         this.currentTrack = 0
+        this.currentTimes = [0, 0, 0]
         this.$audios = [
             new Audio(),
             new Audio(),
             new Audio()
         ]
+        this.restoreProgression()
         this.$playerControls = {
             backward: document.querySelector('.audio-controls .backward'),
             play: document.querySelector('.audio-controls .play'),
@@ -71,18 +76,56 @@ export default class AudioPlayer {
         })
     }
 
-    createAudioAnalyzer = () => {
-        this.audioContext = new AudioContext
-        const track = this.audioContext.createMediaElementSource(this.$audios[this.currentTrack])
-        this.analyzer = this.audioContext.createAnalyser()
-        track.connect(this.analyzer).connect(this.audioContext.destination)
+    addWaveForm = () => {
+        document.querySelector('#waveform').innerHTML = ''
+        const wavesurfer = Wavesurfer.create({
+            container: '#waveform',
+            waveColor: '#ececec',
+            progressColor: '#ff7a00',
+            backend: 'MediaElement',
+        })
+        // wavesurfer.setMute(true)
+        wavesurfer.load(this.$audios[this.currentTrack])
+        this.$audios[this.currentTrack].currentTime = this.currentTimes[this.currentTrack]
+        // wavesurfer.skip(this.currentTimes[this.currentTrack])
+    }
 
-        this.analyzer.fftSize = 2048
-        const BufferSize = this.analyzer.frequencyBinCount
-        this.waveform = new Float32Array(BufferSize)
+    restoreProgression = () => {
+        this.$audios.forEach((a, i) => {
+            this.currentTimes[i] = Math.round(parseInt(localStorage.getItem(`track_${i}_currentTime`)))
+            // a.currentTime = parseInt(localStorage.getItem(`track_${i}_currentTime`))
+        })
+    }
+
+    saveProgression = () => {
+        this.$audios.forEach((a, i) => {
+            this.currentTimes[i] = a.currentTime
+            localStorage.setItem(`track_${i}_currentTime`, `${a.currentTime}`)
+        })
+    }
+
+    createAudioAnalyzer = () => {
+
+        this.audioContext = new AudioContext()
+        this.analyzer = []
+        this.$audios.forEach((a, i) => {
+            this.track = this.audioContext.createMediaElementSource(this.$audios[i])
+            this.analyzer.push(this.audioContext.createAnalyser())
+            this.track.connect(this.analyzer[i]).connect(this.audioContext.destination)
+            this.analyzer[i].fftSize = 2048
+            const BufferSize = this.analyzer[i].frequencyBinCount
+            this.waveform = new Float32Array(BufferSize)
+        })
 
         // setInterval(() => {
         //     console.log(this.waveform)
         // }, 1000)
     }
+
+    // changeAudioAnalyserTrack = () => {
+    //     const track = this.audioContext.createMediaElementSource(this.$audios[this.currentTrack])
+    //     this.analyzer = this.audioContext.createAnalyser()
+    //     track.connect(this.analyzer).connect(this.audioContext.destination)
+
+    // }
 }

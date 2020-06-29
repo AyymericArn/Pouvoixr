@@ -5,8 +5,8 @@ head
   meta(name='description' content='description...')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
-  // <link rel='icon' type='image/png' href='images/favicon.png'>
-  //- link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Basic&family=Alike&family=Alike+Angular&display=swap')
+  //- <link rel='icon' type='image/png' href='images/favicon.png'>
+  link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Basic&family=Alike&family=Alike+Angular&display=swap')
   link(rel='stylesheet' href='./styles/style.styl')
 
 body
@@ -14,30 +14,90 @@ body
     span Chargement...
     .progress-bar
 
+  .top-bar
+    a(href="#", title="title") Spotify
+    a(href="#", title="title") Castbox
+    a(href="#", title="title") Credits
+
   .intro
     h1 Pouvoix’R : La voix au service de l’inclusion
     em Bienvenue dans ce livre audio qui va vous expliquer plein de trucs
-    button Commencer
+    p Ce site est conçu pour être utilisable entièrement à la voix. Voici les instructions que vous pouvez utiliser :
+    ul
+      li 
+        strong Commencer : 
+        | ferme cet écran et lance la navigation
+      li
+        strong Lecture : 
+        | lance la lecture de l'épisode actuellement sélectionné
+      li
+        strong Pause : 
+        | met en pause la lecture de l'épisode actuellement sélectionné et sauvegarde votre progression dans l'épisode
+      li
+        strong Reculer : 
+        | recule de 10 secondes dans la lecture de l'épisode actuellement sélectionné
+      li
+        strong Avancer : 
+        | avance de 10 secondes dans la lecture de l'épisode actuellement sélectionné
+      li
+        strong Épisode précédent : 
+        | navigue d'un épisode en arrière et sauvegarde votre progression dans l'épisode que vous lisiez
+      li
+        strong Épisode suivant : 
+        | navigue d'un épisode en avant et sauvegarde votre progression dans l'épisode que vous lisiez
+      li
+        strong Commandes : 
+        | affiche la liste des commandes disponibles
+    
+    button
+      label Commencer
     
   .particles#particles-js
 
   .app.invisible
-    .pannel
-      .content
-        h3 #{d[0].title}
-        p #{d[0].content}
-      //- audio(preload="metadata" src="./media/episode_1.mp3")
-      //- audio(preload="metadata" src="./media/episode_2.m4a")
-      //- audio(preload="metadata" src="./media/episode_3.mp3")
-          Your browser does not support the
-          <code>audio</code> element.
-      .audio-controls
-        button.backward
-          img(src="media/img/backward.svg", alt="< 10 sec")
-        button.play
-          img(src="media/img/icon.svg", alt="Play.")
-        button.forward
-          img(src="media/img/forward.svg", alt="10 sec >")
+    .help
+      ul
+        li
+          strong Lecture : 
+          | lance la lecture de l'épisode actuellement sélectionné
+        li
+          strong Pause : 
+          | met en pause la lecture de l'épisode actuellement sélectionné et sauvegarde votre progression dans l'épisode
+        li
+          strong Reculer : 
+          | recule de 10 secondes dans la lecture de l'épisode actuellement sélectionné
+        li
+          strong Avancer : 
+          | avance de 10 secondes dans la lecture de l'épisode actuellement sélectionné
+        li
+          strong Épisode précédent : 
+          | navigue d'un épisode en arrière et sauvegarde votre progression dans l'épisode que vous lisiez
+        li
+          strong Épisode suivant : 
+          | navigue d'un épisode en avant et sauvegarde votre progression dans l'épisode que vous lisiez
+        li
+          strong Commandes : 
+          | affiche la liste des commandes disponibles
+      button.toggle #{'>'}
+
+    .pannel-wrapper
+      .pannel.unfold
+        .content
+          h3 #{d[0].title}
+          p #{d[0].content}
+        //- audio(preload="metadata" src="./media/episode_1.mp3")
+        //- audio(preload="metadata" src="./media/episode_2.m4a")
+        //- audio(preload="metadata" src="./media/episode_3.mp3")
+            Your browser does not support the
+            <code>audio</code> element.
+        #waveform
+        .audio-controls
+          button.backward
+            img(src="media/img/backward.svg", alt="< 10 sec")
+          button.play
+            img(src="media/img/icon.svg", alt="Play.")
+          button.forward
+            img(src="media/img/forward.svg", alt="10 sec >")
 
     .controls
       .inner

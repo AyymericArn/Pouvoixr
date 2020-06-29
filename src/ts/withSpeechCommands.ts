@@ -7,21 +7,30 @@ export default function withSpeechCommands (engine: Engine) {
     const recognition = new SpeechRecognition()
     recognition.interimResults = false
 
-    console.log('couilles')
+    // recognition.onresult = () => {
+    //     console.log('resultat')
+    // }
 
     recognition.addEventListener('result', e => {
-        console.log('proute');
         
         const transcript = Array.from(e.results)
             .map(res => res[0])
             .map(res => res.transcript)
-            .join('')
+            .join('');
 
         // const backOf = /^reculer.de.[0-9]+.secondes$/.test(transcript)
 
         switch (transcript) {
             case 'commencer':
                 engine.displayScene()
+                break;
+            
+            case 'commande':
+                engine.displayHelp()
+                break;
+            
+            case 'commandes':
+                engine.displayHelp()
                 break;
 
             case 'lecture':

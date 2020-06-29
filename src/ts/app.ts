@@ -6,6 +6,8 @@ import MagneticButtons from "./MagneticButtons"
 import Loader from "./Loader"
 import withSpeechCommands from "./withSpeechCommands"
 import particlesData from "./particles.json"
+import { roundText } from "./utils"
+import charming from "charming"
 require("particles.js")
 
 const cameraStates = [
@@ -20,7 +22,7 @@ const cameraStates = [
 export default class Engine {
 
     scene: THREE.Scene
-    camera: THREE.Camera
+    camera: THREE.PerspectiveCamera
     renderer: THREE.WebGLRenderer
     shapes: Shapes
     audioPlayer: AudioPlayer
@@ -29,6 +31,7 @@ export default class Engine {
         intro: boolean
         step: number
         frameCounter: number
+        scroll: number
     }
     raycaster: THREE.Raycaster
     mouse: THREE.Vector2
@@ -40,7 +43,7 @@ export default class Engine {
 
     constructor(shapes, audioPlayer) {
         this.scene = new THREE.Scene()
-        this.scene.fog = new THREE.Fog(0xdddddd, 9, 20)
+        this.scene.fog = new THREE.Fog(0xdddddd, 7, 20)
         for (const m of shapes.meshes) {
             
             this.scene.add(m)
@@ -75,6 +78,8 @@ export default class Engine {
             this.scene.add(l)
         }
 
+        this.scene.add(shapes.background)
+
         this.renderer.setSize(window.innerWidth, window.innerHeight)
         this.renderer.domElement.classList.add('three-scene')
         // @ts-expect-error
@@ -83,14 +88,18 @@ export default class Engine {
         
         window.addEventListener("resize", () => {
             this.renderer.setSize(window.innerWidth, window.innerHeight)
+            this.camera.aspect = window.innerWidth / window.innerHeight
+            this.camera.updateProjectionMatrix()
+            // for (const m of this.shapes.meshes) {
+            //     ;(m.children[0] as THREE.Mesh).geometry.
+            // }
         })
-
-        this.mouse = new THREE.Vector2
 
         this.state = {
             intro: true,
             step: 0,
-            frameCounter: 0
+            frameCounter: 0,
+            scroll: 0
         }
 
         this.shapes = shapes
@@ -104,6 +113,8 @@ export default class Engine {
         this.bindControls()
 
         this.bindShapeActions()
+
+        this.listenScroll()
 
         this.setupIntro()
 
@@ -126,7 +137,12 @@ export default class Engine {
         if (!this.audioPlayer.$audios[this.state.step].paused) {
             this.shapes.updateShapeVertices( this.state.step )
         }
-        this.audioPlayer.analyzer.getFloatTimeDomainData(this.audioPlayer.waveform)
+
+        this.shapes.animateBackground()
+        // if (this.state.frameCounter === 0) {            
+        // }
+
+        this.audioPlayer.analyzer[this.state.step].getFloatTimeDomainData(this.audioPlayer.waveform)
         for (const b of this.buttonsMagnetism) {
             b.run()
         }
@@ -141,12 +157,28 @@ export default class Engine {
             tween.easing(TWEEN.Easing.Cubic.InOut)
             tween.start()
 
+            const tween2 = new TWEEN.Tween(this.shapes.background.position).to(new THREE.Vector3(
+                this.shapes.background.position.x - 6,
+                this.shapes.background.position.y - 6,
+                this.shapes.background.position.z + 10
+            ), 2000)
+            tween2.easing(TWEEN.Easing.Cubic.InOut)
+            tween2.start()
+
             this.audioPlayer.currentTrack--
 
-            this.$el.pannel.classList.add('changing-step')
+            this.$el.pannel.classList.remove('unfold')
+            this.$el.pannel.classList.add('fold')
+            // this.$el.pannel.classList.add('changing-step')
             setTimeout(() => {
-                this.$el.pannel.classList.remove('changing-step')
-            }, 2000);
+                // this.$el.pannel.classList.remove('changing-step')
+                this.$el.pannel.classList.remove('fold')
+                this.$el.pannel.classList.add('unfold')
+            }, 1100);
+
+            // this.audioPlayer.createAudioAnalyzer()
+            this.audioPlayer.saveProgression()
+            this.audioPlayer.addWaveForm()
         }
     }
 
@@ -156,14 +188,32 @@ export default class Engine {
             const tween = new TWEEN.Tween(this.camera.position).to(cameraStates[this.state.step], 2000)
             tween.easing(TWEEN.Easing.Cubic.InOut)
             tween.start()
+            
+            const tween2 = new TWEEN.Tween(this.shapes.background.position).to(new THREE.Vector3(
+                this.shapes.background.position.x + 6,
+                this.shapes.background.position.y + 6,
+                this.shapes.background.position.z - 10
+            ), 2000)
+            tween2.easing(TWEEN.Easing.Cubic.InOut)
+            tween2.start()
 
             this.audioPlayer.currentTrack++
 
-            this.$el.pannel.classList.add('changing-step')
+            this.$el.pannel.classList.remove('unfold')
+            this.$el.pannel.classList.add('fold')
+            // this.$el.pannel.classList.add('changing-step')
             setTimeout(() => {
-                this.$el.pannel.classList.remove('changing-step')
-            }, 2000);
+                // this.$el.pannel.classList.remove('changing-step')
+                this.$el.pannel.classList.remove('fold')
+                this.$el.pannel.classList.add('unfold')
+            }, 1100);
+
+            // this.audioPlayer.createAudioAnalyzer()
+
+            this.audioPlayer.saveProgression()
+            this.audioPlayer.addWaveForm()
         }
+
     }
 
     bindControls = () => {
@@ -186,6 +236,7 @@ export default class Engine {
             setTimeout(() => {
                 this.shapes.updateShapeVertices( this.state.step )
             }, 32)
+            this.audioPlayer.saveProgression()
             // this.shapes.resetVertices(this.state.step)
         })
     }
@@ -193,11 +244,15 @@ export default class Engine {
     bindShapeActions = () => {
         // const v = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.5)
         this.raycaster = new THREE.Raycaster()
-        
+        this.mouse = new THREE.Vector2(1, 1)
+
+        for (const m of this.shapes.meshes) {
+            ;((m.children[2] as THREE.Mesh).material as THREE.MeshBasicMaterial).color.set(0xffffff)
+        }
 
         window.addEventListener('mousemove', ( e ) => {
             this.mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1
-            this.mouse.y = ( e.clientY / window.innerHeight ) * 2 + 1
+            this.mouse.y = ( e.clientY / window.innerHeight ) * 2 - 1
         })
     }
 
@@ -229,23 +284,43 @@ export default class Engine {
         const tween = new TWEEN.Tween(this.camera.position).to(cameraStates[0], 1500)
         tween.easing(TWEEN.Easing.Cubic.InOut)
         tween.start()
+        setTimeout(() => {
+            this.audioPlayer.addWaveForm()
+        }, 1500);
     }
 
     shapeHover = () => {
         
-        // const meshes = this.shapes.meshes.map(m => {
-        //     m.updateMatrix()
-        //     m.updateMatrixWorld()
-        //     return m.children[0]
-        // })
+        const meshes = this.shapes.meshes.map(m => {
+            // m.updateMatrix()
+            // m.updateMatrixWorld()
+            return m.children[2]
+        })
 
-        // this.raycaster.setFromCamera( this.mouse, this.camera )
-        // const intersects = this.raycaster.intersectObjects( meshes, true )
-        // for ( let i = 0; i < intersects.length; i++ ) {
-        //     console.log('hey')
-        //     // @ts-ignore
-        //     intersects[ i ].object.material.color.set( 0xff0000 );
-        // }
+        this.raycaster.setFromCamera( this.mouse, this.camera )
+        const intersects = this.raycaster.intersectObjects( meshes, true )
+        //console.log("Engine -> shapeHover -> intersects", intersects)
+        if (!intersects.length) {
+            for (const s of this.shapes.meshes) {
+                ;((s.children[2] as THREE.Mesh).material as THREE.Material).opacity = 0.0
+            }
+
+            document.body.style.cursor = ''
+            window.removeEventListener('click', this.togglePannel, false)
+        }
+
+        for ( let i = 0; i < intersects.length; i++ ) {
+            // @ts-ignore
+            intersects[ i ].object.material.opacity = 1.0
+
+            document.body.style.cursor = 'pointer'
+            window.addEventListener('click', this.togglePannel, false)
+        }
+    }
+
+    togglePannel = () => {
+        this.$el.pannel.classList.toggle('fold')
+        this.$el.pannel.classList.toggle('unfold')
     }
 
     setupParticles = () => {
@@ -255,8 +330,41 @@ export default class Engine {
         // })
         particlesJS('particles-js', particlesData)
     }
+
+    displayHelp = () => {
+        document.querySelector('.help').classList.toggle('revealed')
+        document.querySelector('.help button').textContent = document.querySelector('.help').classList.contains('revealed') ? '<' : '>'
+    }
+
+    listenScroll = () => {
+        const cb = (e) => {
+            if (e.deltaY > 0) {
+                this.nextStep()
+            } else {
+                this.prevStep()
+            }
+            rm()
+            setTimeout(() => {
+                window.addEventListener('wheel', cb, false)
+            }, 2000);
+        }
+        
+        function rm () {
+            window.removeEventListener('wheel', cb, false)
+        }
+
+        window.addEventListener('wheel', cb, false)
+    }
 }
 
-new Loader(
+const app = new Loader(
     withSpeechCommands(new Engine(new Shapes(), new AudioPlayer))
 )
+
+// some styling additions
+// roundText(document.querySelector('.intro label'), '.intro label')
+charming(document.querySelector('.intro label'))
+
+document.querySelector('.help button').addEventListener('click', () => {
+    app.engine.displayHelp()
+}, {capture: false})

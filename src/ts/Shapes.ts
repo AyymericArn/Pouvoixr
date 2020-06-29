@@ -8,6 +8,8 @@ export default class Shapes {
     materials: THREE.Material[]
     meshes: THREE.Object3D[]
 
+    background: THREE.Mesh
+
     initialVerticesPosition: THREE.Vector3[][]
 
     constructor () {
@@ -24,9 +26,12 @@ export default class Shapes {
             // new THREE.ShaderMaterial( { uniforms: { uWaveForm: { value: 0 } }, vertexShader: document.getElementById('vertexShader').textContent} ),
             // new THREE.ShaderMaterial( { uniforms: { uWaveForm: { value: 0 } }, vertexShader: document.getElementById('vertexShader').textContent} ),
             // new THREE.ShaderMaterial( { uniforms: { uWaveForm: { value: 0 } }, vertexShader: document.getElementById('vertexShader').textContent} ),
-            new THREE.MeshStandardMaterial( { color: 0xffaa00, roughness: 0.6, metalness: 0.2 } ),
-            new THREE.MeshStandardMaterial( { color: 0xffaa00, roughness: 0.6, metalness: 0.2 } ),
-            new THREE.MeshStandardMaterial( { color: 0xffaa00, roughness: 0.6, metalness: 0.2 } ),
+            new THREE.MeshPhongMaterial( { color: 0xff7900, flatShading: true } ),
+            new THREE.MeshPhongMaterial( { color: 0xff7900, flatShading: true } ),
+            new THREE.MeshPhongMaterial( { color: 0xff7900, flatShading: true } ),
+            // new THREE.MeshStandardMaterial( { color: 0xffaa00, roughness: 0.6, metalness: 0.2 } ),
+            // new THREE.MeshStandardMaterial( { color: 0xffaa00, roughness: 0.6, metalness: 0.2 } ),
+            // new THREE.MeshStandardMaterial( { color: 0xffaa00, roughness: 0.6, metalness: 0.2 } ),
         ]
 
         // var material = new THREE.MeshPhongMaterial( {
@@ -40,7 +45,12 @@ export default class Shapes {
         this.meshes = geometries.map((_, i) => {
             const shape = new THREE.Object3D()
             shape.add(new THREE.Mesh( geometries[i], this.materials[i] ))
-            shape.add(new THREE.LineSegments( edges[i], new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 2, opacity: 0.1, transparent: true } ) ))
+            shape.add(new THREE.LineSegments( edges[i], new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 2, opacity: 0.0, transparent: true } ) ))
+            
+            const outlineMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.BackSide, transparent: true } );
+            const outlineMesh = new THREE.Mesh( geometries[i], outlineMaterial );
+            outlineMesh.scale.multiplyScalar(1.05);
+            shape.add(outlineMesh)
             
             return shape
         })
@@ -75,6 +85,8 @@ export default class Shapes {
         })()
 
         this.bounce()
+
+        this.setupBackground()
 
         console.table(this.meshes)
     }
@@ -169,6 +181,119 @@ export default class Shapes {
         // @ts-ignore
         ;((this.meshes[stepIndex].children[1] as THREE.LineSegments).geometry as THREE.EdgesGeometry).attributes.position.needsUpdate = true
         ;((this.meshes[stepIndex].children[0] as THREE.Mesh).geometry as THREE.Geometry).verticesNeedUpdate = true
+    }
+
+    setupBackground = () => {
+        const background = new THREE.PlaneGeometry(50, 50, 25, 25)
+        const material = new THREE.MeshPhongMaterial({ color: 0x999999, flatShading: true })
+        material.onBeforeCompile = (shader) => {
+            shader.uniforms.time = { value: 0 }
+            shader.vertexShader = 'uniform float time;\n' + shader.vertexShader;
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <begin_vertex>',
+                [
+                    'vec3 vNormal = vec3(0);',
+                    `float theta = sin( time + position.y + position.x ) / ${ Number(40).toFixed( 1 ) };`,
+                    'float c = cos( theta );',
+                    'float s = sin( theta );',
+                    // 'mat3 m = mat3( c, 0, s, c, 1, s, -s, 0, -s );',
+                    'mat3 m = mat3( c, 0, s, 0, 1, 0, -s, 0, c );',
+                    'vec3 transformed = vec3( position ) * m;',
+                    'vNormal = vNormal * m;'
+                    
+                    // `
+                    // float vWaveEffect = 0.0;
+                    // vec3 vNormal = vec3(0);
+                    // vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+            
+                    // float waveEffect = sin(modelPosition.y * 10.0 + time * 0.03) + sin(modelPosition.x * 10.0 + time * 0.3);
+                    // modelPosition.xyz += normal * vec3(waveEffect) * 0.2;
+            
+                    // vNormal = normal;
+                    // vWaveEffect = waveEffect;
+            
+                    // gl_Position = projectionMatrix * viewMatrix * modelPosition;`
+                ].join('\n')
+            )
+
+            material.userData.shader = shader;
+        };
+
+        // const shader = new THREE.ShaderMaterial({
+        //     uniforms: { uTime: { value: 0 } },
+        //     vertexShader:     `
+        //     uniform float uTime;
+            
+        //     varying vec3 vNormal;
+        //     varying float vWaveEffect;
+            
+        //     void main()
+        //     {
+        //         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+            
+        //         float waveEffect = sin(modelPosition.y * 10.0 + uTime * 0.03) + sin(modelPosition.x * 10.0 + uTime * 0.3);
+        //         modelPosition.xyz += normal * vec3(waveEffect) * 0.2;
+            
+        //         vNormal = normal;
+        //         vWaveEffect = waveEffect;
+            
+        //         gl_Position = projectionMatrix * viewMatrix * modelPosition;
+        //     }
+        //         `,
+        //     fragmentShader:     `
+        //     varying vec3 vNormal;
+        //     varying float vWaveEffect;
+            
+        //     void main()
+        //     {
+        //         // vec3 color = vec3(0.5, 0.5, 0.5) + vec3(vWaveEffect - 0.2);
+        //         gl_FragColor = vec4(0.5, 0.5, 0.5, 1.0);
+        //     }
+        //         `,
+        //         flatShading: true,
+        // })
+
+        this.background = new THREE.Mesh(background, material)
+        this.background.position.x = -7
+        this.background.position.y = -8
+        this.background.position.z = -3
+        this.background.rotation.z = -3.65
+        this.animateBackground()
+
+        // bounce
+        // const tween = new TWEEN.Tween( this.background.position ).to(new THREE.Vector3( this.background.position.x, this.background.position.y + 0.3, this.background.position.z ), 1000)
+        // const rtween = new TWEEN.Tween( this.background.rotation ).to(new THREE.Vector3( this.background.rotation.x, this.background.rotation.y + 3, this.background.rotation.z ), 1000)
+        // const tween2 = new TWEEN.Tween( this.background.position ).to(new THREE.Vector3( this.background.position.x, this.background.position.y - 0.3, this.background.position.z ), 2000)
+        // const rtween2 = new TWEEN.Tween( this.background.rotation ).to(new THREE.Vector3( this.background.rotation.x, this.background.rotation.y - 3, this.background.rotation.z ), 2000)
+        // const tween3 = new TWEEN.Tween( this.background.position ).to(new THREE.Vector3( this.background.position.x, this.background.position.y, this.background.position.z ), 1000)
+        // const rtween3 = new TWEEN.Tween( this.background.rotation ).to(new THREE.Vector3( this.background.rotation.x, this.background.rotation.y, this.background.rotation.z ), 1000)
+        
+        // tween.easing(TWEEN.Easing.Quadratic.Out)
+        // tween2.easing(TWEEN.Easing.Quadratic.InOut)
+        // tween3.easing(TWEEN.Easing.Quadratic.In)
+            
+        // tween.chain(tween2)
+        // tween2.chain(tween3)
+        // tween3.chain(tween)
+        // tween.start()
+    }
+
+    animateBackground = () => {
+        // @ts-ignore
+        const shader = this.background.material.userData.shader
+        if (shader) {
+            shader.uniforms.time.value = performance.now() / 1000
+        }
+
+        // (this.background.material as THREE.ShaderMaterial).uniforms.uTime.value += 0.2
+        // const time = new Date().getSeconds()
+        // for (const v of (this.background.geometry as THREE.Geometry).vertices) {
+        //     // v.z = (Math.random() - 0.5)
+        //     const tween = new TWEEN.Tween( v ).to( new THREE.Vector3(v.x, v.y, Math.sin(time + v.x + v.y)), 1000)
+        //     tween.easing(TWEEN.Easing.Quadratic.InOut)
+        //     tween.start()
+        // }
+        // ;(this.background.geometry as THREE.Geometry).verticesNeedUpdate = true
     }
 }
 

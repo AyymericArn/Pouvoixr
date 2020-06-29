@@ -30,11 +30,8 @@ export default class Loader {
     }
 
     onLoad = () => {
-
-        
         
         const cb = (e) => {
-            console.log(e.type)
             this.state++
             this.updateLoadState()
             if (this.state === this.maxState) {
