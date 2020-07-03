@@ -5,9 +5,13 @@ import AudioPlayer from "./AudioPlayer"
 import MagneticButtons from "./MagneticButtons"
 import Loader from "./Loader"
 import withSpeechCommands from "./withSpeechCommands"
+import Parallax from "./Parallax"
 import particlesData from "./particles.json"
 import { roundText } from "./utils"
 import charming from "charming"
+
+import content from "../content.json"
+
 require("particles.js")
 
 const cameraStates = [
@@ -179,6 +183,8 @@ export default class Engine {
             // this.audioPlayer.createAudioAnalyzer()
             this.audioPlayer.saveProgression()
             this.audioPlayer.addWaveForm()
+
+            this.loadContent()
         }
     }
 
@@ -212,8 +218,16 @@ export default class Engine {
 
             this.audioPlayer.saveProgression()
             this.audioPlayer.addWaveForm()
-        }
 
+            this.loadContent()
+        }
+    }
+
+    loadContent = () => {
+        this.$el.pannel.children[0].firstChild.textContent = content[this.state.step].title
+        this.$el.pannel.children[0].children[1].textContent = content[this.state.step].content
+        this.$el.pannel.children[0].children[1].children[0].setAttribute('href', content[this.state.step].href)
+        this.$el.pannel.children[0].children[1].children[1].setAttribute('href', `/written-episodes/${this.state.step}`)
     }
 
     bindControls = () => {
@@ -229,6 +243,8 @@ export default class Engine {
         buttons.next.addEventListener('click', this.nextStep)
 
         this.setButtonsMagnetism(buttons.prev, buttons.next)
+
+        this.$el.pannel.children[0].children[1].children[0].setAttribute('href', content[this.state.step].href)
     }
 
     listenPause = () => {
@@ -272,6 +288,7 @@ export default class Engine {
     }
 
     displayScene = () => {
+        this.state.intro = false
         const $intro = document.querySelector('.intro')
         $intro.classList.add('invisible')
         setTimeout(() => {
@@ -286,7 +303,7 @@ export default class Engine {
         tween.start()
         setTimeout(() => {
             this.audioPlayer.addWaveForm()
-        }, 1500);
+        }, 1000);
     }
 
     shapeHover = () => {
@@ -357,9 +374,8 @@ export default class Engine {
     }
 }
 
-const app = new Loader(
-    withSpeechCommands(new Engine(new Shapes(), new AudioPlayer))
-)
+const engine = withSpeechCommands(new Engine(new Shapes(), new AudioPlayer))
+const app = new Loader(engine)
 
 // some styling additions
 // roundText(document.querySelector('.intro label'), '.intro label')
@@ -368,3 +384,4 @@ charming(document.querySelector('.intro label'))
 document.querySelector('.help button').addEventListener('click', () => {
     app.engine.displayHelp()
 }, {capture: false})
+new Parallax(engine)

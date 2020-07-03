@@ -1,6 +1,6 @@
 doctype html
 head
-  title  . 
+  title Pouvoix'r : La voix au service de l'inclusion
   meta(charset='utf-8')
   meta(name='description' content='description...')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
@@ -15,15 +15,15 @@ body
     .progress-bar
 
   .top-bar
-    a(href="#", title="title") Spotify
-    a(href="#", title="title") Castbox
-    a(href="#", title="title") Credits
+    //- a(href="#", title="title") Spotify
+    a(href="https://castbox.fm/channel/Pouvoix'R-id3055315?country=fr", title="Lien castbox") Écouter sur Castbox
+    a(href="./credits", title="title") Credits
 
   .intro
-    h1 Pouvoix’R : La voix au service de l’inclusion
-    em Bienvenue dans ce livre audio qui va vous expliquer plein de trucs
-    p Ce site est conçu pour être utilisable entièrement à la voix. Voici les instructions que vous pouvez utiliser :
-    ul
+    h1(data-depth="0.3") Pouvoix’R : La voix au service de l’inclusion
+    em(data-depth="0.3") Bienvenue dans ce livre audio qui va vous expliquer plein de trucs
+    p(data-depth="0.3") Ce site est conçu pour être utilisable entièrement à la voix. Voici les instructions que vous pouvez utiliser :
+    ul(data-depth="0.3")
       li 
         strong Commencer : 
         | ferme cet écran et lance la navigation
@@ -48,9 +48,9 @@ body
       li
         strong Commandes : 
         | affiche la liste des commandes disponibles
-    
-    button
-      label Commencer
+    div
+      button
+        label Commencer
     
   .particles#particles-js
 
@@ -82,26 +82,30 @@ body
 
     .pannel-wrapper
       .pannel.unfold
-        .content
+        .content(data-depth="0.8")
           h3 #{d[0].title}
           p #{d[0].content}
+            a(title="Télécharger" download).download Télécharger l'épisode
+            a(href="./written-episodes/1", title="Transcription").article Voir la version écrite
         //- audio(preload="metadata" src="./media/episode_1.mp3")
         //- audio(preload="metadata" src="./media/episode_2.m4a")
         //- audio(preload="metadata" src="./media/episode_3.mp3")
             Your browser does not support the
             <code>audio</code> element.
-        #waveform
+        #waveform(data-depth="0" data-noblur="true")
         .audio-controls
           button.backward
             img(src="media/img/backward.svg", alt="< 10 sec")
           button.play
-            img(src="media/img/icon.svg", alt="Play.")
+            img(src="media/img/playpause.svg", alt="Play.")
           button.forward
             img(src="media/img/forward.svg", alt="10 sec >")
 
     .controls
       .inner
-        button.previous précedent
-        button.next next
+        button.previous 
+          img(src="media/img/next.svg", alt="")
+        button.next
+          img(src="media/img/next.svg", alt="")
 //- script(type='x-shader/x-fragment' src='ts/vertexShader.vert' id="vertexShader")
 script(type='text/javascript' src='ts/app.ts' defer)

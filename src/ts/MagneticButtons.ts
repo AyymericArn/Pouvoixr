@@ -36,7 +36,10 @@ export default class MagneticButtons {
             scale: 1.2
         }
 
-        document.addEventListener('mousemove', this.mouseMove, false)
+        if (window.innerWidth >= 1920) {
+            document.addEventListener('mousemove', this.mouseMove, false)
+        }
+
         window.addEventListener('resize', this.resize)
     }
 

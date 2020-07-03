@@ -32,7 +32,12 @@ export default class Loader {
     onLoad = () => {
         
         const cb = (e) => {
+            console.log(e.type);
+            console.log(e.target);
+            
             this.state++
+            console.log(this.state)
+            console.log(this.maxState)
             this.updateLoadState()
             if (this.state === this.maxState) {
                 document.querySelector('.loader span').classList.add('invisible')

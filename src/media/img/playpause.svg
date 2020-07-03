@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" height="48" width="48"><g class="nc-icon-wrapper js-transition-icon" data-effect="scale" data-event="click"><g fill="#111111" class="js-transition-icon__state" style=""><title>ic_play_arrow_48px</title>
+        <path d="M16 10v28l22-14z"></path>
+    </g><g fill="#111111" class="js-transition-icon__state" aria-hidden="true" style="display: none;"><title>ic_pause_48px</title>
+        <path d="M12 38h8V10h-8v28zm16-28v28h8V10h-8z"></path>
+    </g></g></svg>

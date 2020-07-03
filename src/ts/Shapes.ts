@@ -137,7 +137,7 @@ export default class Shapes {
                 .slice(i, i+55)
                 .reduce((prev, cur) => prev + cur) / 56;
 
-            values.push(Math.sin(value * 100) / 10)
+            values.push(Math.sin(value * 100) / 20)
         }
 
         for (const index in ((this.meshes[stepIndex].children[0] as THREE.Mesh).geometry as THREE.Geometry).vertices) {

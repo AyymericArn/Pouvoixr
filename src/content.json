@@ -2,16 +2,16 @@
     {
         "title": "Episode 1: le handicap aux mutliples visages",
         "content": "Dans cette première partie, nous évoquons les différents types de handicap reconnus par l'Organisation Mondiale de la Santé, et nous arrêtons plus en détail sur ceux auxquels les interfaces vocales peuvent apporter une aide précieuse.",
-        "link": "/episode-1"
+        "href": "https://s3.eu-west-3.amazonaws.com/pouvoixr/1.mp3"
     },
     {
-        "title": "Episode 1: le handicap aux mutliples visages",
-        "content": "Dans cette première partie, nous évoquons les différents types de handicap reconnus par l'Organisation Mondiale de la Santé, et nous arrêtons plus en détail sur ceux auxquels les interfaces vocales peuvent apporter une aide précieuse.",
-        "link": "/episode-1"
+        "title": "Épisode 2 : Les apports de la voix",
+        "content": "Dans la continuité des choses, ce deuxième podcast va nous permettre de découvrir la voix et de voir comment elle pourrait répondre à des nécessités de personnes qui souffrent de l’impact de leur handicap dans la société. ",
+        "href": "https://s3.eu-west-3.amazonaws.com/pouvoixr/2.mp3"
     },
     {
-        "title": "Episode 1: le handicap aux mutliples visages",
-        "content": "Dans cette première partie, nous évoquons les différents types de handicap reconnus par l'Organisation Mondiale de la Santé, et nous arrêtons plus en détail sur ceux auxquels les interfaces vocales peuvent apporter une aide précieuse.",
-        "link": "/episode-1"
+        "title": "Épisode 3 : Un outil loin d'être parfait",
+        "content": "La troisième et dernière partie de notre série de podcasts a pour but de mettre en évidence les limites de l’utilisation de la voix dans une solution. Vous pourrez entendre ici un expert de l’expérience utilisateur, Romain Dao, qui a bien voulu nous consacrer du temps pour répondre à nos questions. ",
+        "href": "https://s3.eu-west-3.amazonaws.com/pouvoixr/3.mp3"
     }
 ]

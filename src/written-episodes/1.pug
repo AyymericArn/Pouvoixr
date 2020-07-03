@@ -11,6 +11,164 @@ head
 
 
 body
-    h1 Episode 1: le handicap aux mutliples visages
-    h2 Dans cette première partie, nous évoquons les différents types de handicap reconnus par l'Organisation Mondiale de la Santé, et nous arrêtons plus en détail sur ceux auxquels les interfaces vocales peuvent apporter une aide précieuse.
+    .top-bar
+        //- a(href="#", title="title") Spotify
+        a(href="./", title="Accueil") Le Podcast
+        a(href="https://castbox.fm/channel/Pouvoix'R-id3055315?country=fr", title="Lien castbox") Écouter sur Castbox
+        a(href="./credits", title="title") Credits
+    .transcript
+        h1 #{d[0].title}
+        h4 #{d[0].content}
+        h3 Aurélien
+        p Bonjour à tous et bienvenue dans ce premier podcast, nous allons parler des assistants vocaux et de leur utilité dans la société. Dans cette première partie nous allons rentrer dans le vif du sujet, avec la notion de handicap et ses différentes facettes, puis on va essayer d’y répondre le plus clairement possible en vous proposant une discussion, un échange à trois avec nos interlocuteurs qui sont Aymeric et Jacques. Je vous laisse définir la notion du handicap.
+        h3 Jacques
+        p Alors, selon la définition de l’Organisation Mondiale de la Santé (l’OMS) “Est handicapée toute personne dont l’intégrité physique ou mentale est passagèrement ou définitivement diminuée, soit congénitalement, soit sous l’effet de l’âge ou d’un accident, en sorte que son autonomie, son aptitude à fréquenter l’école ou à occuper un emploi s’en trouve compromise.”
+        p C’est donc la définition officielle de l’handicap, est c’est donc le souci auquel on va répondre aujourd’hui avec plusieurs solutions.
+        h3 Aymeric
+        p Tout à fait Jacques, ce qui est important c’est de pouvoir différencier un handicap par rapport à des simples déficiences, qui correspondent juste à un écart de fonctionnement d’un organe d’un sens par rapport au fonctionnement normal de cet organe, qui résulte en l’altération d’une structure ou fonction psychologique, physiologique ou anatomique. Et aussi tout ce qui concerne les incapacités, qui sont des impossibilités pour la personne déficiente de faire certaines actions, qui sont dues à une ou plusieurs déficiences et amène à la réduction partielle ou totale de la capacité à accomplir une activité.
+        p Du coup ces handicaps, tels que tu les définissais, on peut les rassembler en cinq grandes catégories, qui sont le handicap sensoriel, le handicap moteur, le handicap mental, le handicap cognitif, le handicap psychique, et les maladies invalidantes.
+        h3 Aurélien
+        p Merci Aymeric, du coup qu’est ce que le handicap sensoriel ?
+        h3 Aymeric
+        p Alors le handicap sensoriel, c’est un type de handicap qui, comme son nom l’indique, touche les sens de la victime, donc les sens vous les connaissez, comme l’odorat, l'ouïe, le toucher, la vue et le goût. Ceux qui sont le plus représentés c’est effectivement la vue pour toutes les personnes malvoyantes et aveugles, et l’ouïe pour ce qui concerne la surdité. Nous on choisit aujourd’hui de s’intéresser aux personnes qui sont plus en situation de handicap visuel, puisque les personnes sourdes ont assez peu de champ d’application, d’interaction avec les interfaces vocales et audios, donc c’est les utilisateurs malvoyants qui vont intéresser notre sujet pour le handicap sensoriel.
+        h3 Aurélien
+        p Et du coup en France et dans le monde, il y a combien de personnes qui sont touchées par ce type de handicap ?
+        h3 Aymeric
+        p Ça constitue une population assez importante, dans le monde c’est 285 millions de personnes dont 39 millions d’aveugles, en France c’est un trouble qui concerne environ 1,7 millions de personnes dont environ 200.000 aveugles. Cette population représente l’une des plus importantes parmi celles qui ont une utilisation défavorisée au quotidien des outils numériques, malgré le fait qu’elle soit assez peu représentée dans l’ensemble du pool des personnes considérées comme handicapées en France, puisqu’il s’agit d’à peu près 4% des personnes considérées comme handicapées.
+        h3 Aurélien
+        p D’accord, mais du coup ça doit être compliqué de vivre avec ce genre de handicap. Est-ce que vous savez comment les personnes malvoyantes et les personnes sourdes arrivent à compenser cet handicap dans la vie de tous les jours ?
+        h3 Aymeric
+        p Pour ce qui est du handicap sensoriel, la compensation elle passe avant tout par les sens, par leurs sens qui fonctionnent, par les autres sens du coup qui ne sont pas invalidés par le handicap, et comme vous le savez on a 5 principaux sens qui sont habituellement attribués à l’humain, mais on peut rappeler qu’il est aussi possible d’en considérer bien plus (comme la proprioception, l’équilibre, le sens algique, la thermoception) qui sont parfois considérés comme des sens parmi les neurophysiologistes.
+
+        p Donc chez les malvoyants on a essentiellement l’ouïe, la perception des masses, le toucher, la mémorisation, l’odorat qui sont des vecteurs d’appréhension du monde extérieur, couplés à l’aide animalière et à l’aide humaine. Sur le web elles ne sont malheureusement pas toutes utilisables, sur le web et au travers de tous les outils numériques qu’ils utilisent. Seules les aides auditives, mémorielles et humaines sont applicables, même si certains objets connectés permettent d’utiliser le toucher, voire l’odorat, mais c’est des cas d’usage dans lesquels ces ustensiles-là sont plus pensés pour agrémenter l’utilisation des utilisateurs valides.
+
+        p Les fonctions essentielles d’assistance desquels les déficients visuels doivent bénéficier ont été définies par Jean-Claude Sperandio en 2002, accompagné par d’autres psychologues, qui sont: L’assistance de la mémoire de l’utilisateur, pour alléger sa mémoire de travail en mémorisant les segments de son parcours parcouru, les points non encore parcourus, l’ordre de la visite d’un lieu physique ou digital (typiquement Web), l’assistance de veille pour attirer l’utilisateur vers des informations implicites liées aux intentionnalités cachées, l’assistance d’enrichissement des contenus, et l’assistance au filtrage des informations qui permettent aux utilisateurs à déficience visuelle d’avoir un aperçu assez complet de l’information qu’il cherche dans un lieu physique ou numérique.
+
+        h3 Aurélien
+        p Bien sûr, mais du coup est-ce qu’il y a une sorte de standardisation de l’accessibilité Web, c’est-à-dire des règles qui sont écrites pour suivre une certaine logique de construction d’objets ou de technologie pour aider ces personnes ?
+        h3 Jacques
+        p Effectivement il y a un regroupement de règles pour l’accessibilité des contenus web, ça s’appelle le WCAG (Web Content Accessibility Guidelines). C’est un ensemble de règles définies afin de rendre les contenus web plus accessibles, donc des normes à respecter pour les développeurs de sites web, pour que leur site soit le plus accessible possible.
+
+        p Donc pour en citer quelques uns, il y a une règle vis-à-vis des contenus non-textuels (donc par exemple des images ou des vidéos), il faut absolument que ces éléments soient accompagnés d’un équivalent textuel, qui peut être interprété par un outil d’assistance tel une interface vocale, qui peut décrire ce qu’il se passe dans l’image ou dans la vidéo. Il faut que les utilisateurs aient le contrôle du son, des clignotements ou du défilement de contenu qui peuvent se produire sur le site afin de les interrompre ou de les mettre en pause. Il faut que l’entièreté du site soit accessible au clavier, donc que l’utilisateur puisse naviguer à l’aide de ses touches, et non pas uniquement de la souris. Il faut que l’utilisateur puisse avoir de la visibilité et le contrôle entier sur son focus (donc là où il a l’intention d’interagir avec la page web, les boutons sur lesquels cliquer), il faut que ce soit bien évident pour l’utilisateur, et il faut bien sûr qu’il puisse se localiser dans l’ensemble des pages web pour repérer où il est, donc à quel niveau de page, qu’il puisse retourner en arrière, aller un niveau plus bas - il faut vraiment que ce soit intuitif et accessible pour tous les utilisateurs.
+        h3 Aymeric
+        p Oui, ce que nous dit le Web Content Accessibility Guidelines, WCAG comme tu disais, c’est que les contenus doivent être perceptibles, utilisables, compréhensibles et robustes pour l’ensemble des utilisateurs, quel que soit leur niveau de “validité”.
+        h3 Aurélien
+        p D’accord, mais du coup on s’est plus axés sur l’aspect web et numérique, mais je suppose que dans la vie de tous les jours, ces personnes-là ont des besoins spécifiques, est-ce que vous savez quels besoins spécifiques ils ont ?
+
+        h3 Aymeric :
+
+        p Au-delà de la simple navigation numérique, les malvoyants ont également besoin d’interagir avec leur environnement physique, ne serait-ce que déjà pour leur logement. par exemple quand un utilisateur malvoyant veut allumer ou éteindre les lumières de son logement s’il est avec des personnes voyantes, s’il veut allumer sa télévision, utiliser ses ustensiles de cuisine, il peut vouloir retrouver son téléphone, jouer de la musique, communiquer avec les autres habitants du foyer… Donc ça c’est des cas d’usage qui sont très fréquents pour ces personnes-là et pour lesquelles, on va le voir, on a un certain nombre d’outils et d’interfaces qui permettent une utilisation facilitée pour contourner les soucis auxquels ils peuvent être confrontés lors de ces situations-là.
+
+        p Et puis après, bien sur, en dehors de l’utilisation du logement, ils ont besoin de pouvoir se repérer dehors, et c’est pour ce type de besoin qu’a été imaginé le modèle SOLID, qui correspond à l’acronyme Sécurité, Orientation, Localisation, Information et Déplacement, et qui est un modèle des besoins des déficients visuels par rapport à leur motif de navigation, qui recense donc cinq catégories de besoin, qui sont le besoin de sécurité (pour éviter les chutes, les chocs, les collisions), le besoin de localisation (à la fois de soi et de son entourage, “où suis-je et qu’est ce qui se trouve autour de moi”), le besoin d’orientation (qui nécessite le maintien d’une démarche rectiligne, le respect d’une trajectoire ou d’un trajet), le besoin d’information (par exemple, par rapport à son transport) et le besoin de déplacement physique, enfin, pour éviter les difficultés de franchissement et toutes les pénibilités qui peuvent y être liées.
+
+        h3 Aurélien :
+
+        p D’accord, et du coup à l’image de ces personnes qui sont handicapées d’une manière sensorielle, il y a aussi les personnes qui sont handicapées moteur, donc c’est un autre handicap. Jacques, concrètement, qu’est-ce que le handicap moteur ?
+
+        h3 Jacques :
+
+        p Alors le handicap moteur, ça regroupe tous les handicaps qui sont liés aux membres du corps et à leur mouvement. Donc il peut s’agir d’une difficulté à utiliser ses jambes pour se déplacer, ou ses bras et ses mains pour manipuler, ou même d’une totale impossibilité (on parle donc de paraplégiques, de tétraplégiques, de personnes qui ont complètement perdu l’usage de leurs bras et/ou leurs jambes. C’est un problème qui les empêche de se déplacer normalement et d’utiliser certains outils; de vivre leur vie normalement.
+
+        p Ces handicaps sont très problématiques dans la vie de tous les jours, car ils empêchent un fonctionnement normal, ça fait que certains lieux ne sont plus accessibles (notamment les endroits qui n’ont pas d’ascenseur, d’escalator pour les personnes qui ont des béquilles par exemple), ça peut donc rendre les choses extrêmement compliquées.
+
+        h3 Aurélien :
+
+        p Oui, clairement. Mais du coup d’après ce que tu dis, je comprends qu’il y a plusieurs formes de handicap, n’est-ce pas ?
+
+        h3 Aymeric :
+
+        p Oui, les handicapés moteurs peuvent souffrir de plusieurs formes de handicap moteur - t’as donc évoqué les tétraplégiques, qui sont les personnes atteintes de paralysie de leurs quatre membres, dont les besoins d’assistance sont d’ailleurs très élevés (du fait que leurs mains ne fonctionnent pas).
+
+        p On a également les paraplégiques, qui sont souffrants d’une paralysie des deux membres inférieurs, et puis après on a d’autres formes, par exemple des gens qui souffrent d’infirmité motrice cérébrale (il s’agit de cas assez spécifiques puisque les membres ou les organes touchés ne vont pas être les mêmes en fonction des lésions cérébrales qui touchent la personne). Et bien sûr après on a d’autres formes de handicap moteur intermédiaires ou partielles qui existent, qui peuvent ne concerner qu’un seul membre, et qui peuvent être liées à des causes assez différentes.
+
+        h3 Aurélien :
+
+        p D’accord, et est-ce que c’est une chose qui est rare dans le monde, ou ces handicaps moteurs sont assez récurrents ?
+
+        h3 Jacques :
+
+        p Alors en France en particulier, il y a 2,3 millions de personnes qui sont touchées par des handicaps moteur, ce qui représente 5,3% de la population active. C’est donc un handicap très répandu, c’est le deuxième handicap le plus commun après le handicap auditif, donc c’est quelque chose qui est d’actualité, c’est quelque chose qu’il faut vraiment prendre en compte lors du design d’accessibilité, que ce soit en physique ou en digital.
+
+        h3 Aurélien : 
+
+        p D’accord, et vous savez les causes de ces différentes formes de handicap ?
+
+        h3 Aymeric :
+
+        p Oui, ce handicap peut être lié à diverses causes, ça peut être des accidents physiques comme tu l’as dit, ça peut être aussi des malformations à la naissance (donc des membres qui sont malformés, des malformations de la moelle épinière ou de la colonne vertébrale, comme la spina bifida, qui est une malformation de ce type.
+
+        p Ça peut être aussi lié à des maladies, comme la myopathie, qui invalide l’usage de certains membres, l’infirmité motrice cérébrale comme on l’a évoquée tout à l’heure, ça peut être lié malheureusement aussi parfois à des amputations, suite à des accidents. Donc ça peut être lié à des causes assez diverses.
+
+        h3 Aurélien : 
+
+        p Jacques, du coup, comment on peut essayer de compenser le fait d’être handicapé moteur, donc au niveau du déplacement mais aussi au niveau des solutions numériques ?
+
+        p h3 Jacques :
+
+        p Alors, les outils de compensation au niveau physique, ce serait donc les choses comme les fauteuils roulants, les béquilles, tout ce qui permet aux personnes de se déplacer malgré leur handicap. Bien sûr il faut que l’infrastructure aussi puisse s’adapter pour ces outils, par exemple les ascenseurs pour que les fauteuils roulants puissent aller d’étage en étage, les rampes aux côtés des escaliers, les escalators pour faciliter les personnes qui ont des difficultés à se déplacer mais ont quand même l’usage de leurs jambes. Tous ces outils de compensation ont donc l’objectif de pallier aux besoins des personnes qui sont touchées par ces handicaps.
+
+        p Du point de vue digital, il existe des outils tels que la commande vocale, donc qui est le principal sujet de nos podcasts aujourd’hui, qui permet donc de manipuler un ordinateur (ou n’importe quel appareil) avec sa voix, et donc de ne pas avoir besoin de le toucher, de manipuler des souris, des claviers ou un écran tactile, ce qui rend possible l’interaction pour les personnes qui ne peuvent pas bouger leurs bras. Les autres outils qui servent à manipuler les appareils électroniques malgré le handicap seraient donc des claviers et souris adaptés. Il y a donc des périphériques contrôlables avec seulement des très petits mouvements, pour les personnes qui ne peuvent pas faire de grands gestes. Et dans le futur on pourra peut-être parler d’eye tracking, qui est une technologie qui permet de détecter là où regarde l’oeil de la personne, pour qu’il puisse contrôler un écran basé sur la direction de ses yeux.
+
+        h3 Aurélien :
+
+        p Très bien, merci pour ces réponses. Du coup, quels sont les spécificités ou les besoins de ces personnes handicapées moteur ?
+
+        h3 Jacques :
+
+        p Alors principalement, le premier souci ça va être un besoin d’autonomie, car ces personnes-là, si elles ne peuvent pas se déplacer sans l’aide d’une personne ou d’un outil, ça va leur enlever une grande partie d’autonomie dans leur vie, car ils ne peuvent plus se déplacer où ils veulent, de la manière qu’ils veulent, avec la rapidité qu’ils veulent. Aussi l’utilisation de leurs appareils, comme je disais tout à l’heure. Ça rend vraiment beaucoup de choses extrêmement compliquées dans la vie de tous les jours. Donc, autre que de s’y habituer, leur besoin ça va donc être de trouver des outils et des solutions qui vont pallier à leurs problèmes le mieux possible, donc pour se déplacer et pour interagir avec leurs interfaces d’une manière qui facilite leur vie de tous les jours.
+
+        p Également, leur besoin va être d’avoir les mêmes opportunités que les personnes non-handicapées, afin de s’intégrer facilement dans la société sans grands obstacles, car les handicapés moteurs vont forcément avoir des difficultés à s’intégrer aussi facilement que les personnes non-handicapées. Au niveau des emplois, au niveau des déplacements, il faut forcément que cette personne s’adapte à une vie qui n’est pas forcément aussi facile que les personnes non-handicapées, donc le besoin, encore une fois, va être de trouver des solutions pour y pallier.
+
+        h3 Aurélien :
+
+        p Clairement, et je trouve qu’on fait bien d’en parler ici, du coup, pour montrer aux gens leurs difficultés. Je vous propose du coup, à toi et Aymeric, de passer au dernier type de handicap qu’on va traiter ici, donc le handicap cognitif. Je pense que c’est le type le plus complexe, et je vais laisser Aymeric le présenter et voir ses différentes facettes.
+
+        h3 Aymeric :
+
+        p Bien sûr, avec plaisir ! Le handicap cognitif - en fait, je vais parler à la fois du handicap mental et du handicap psychique, qui sont, il faut le savoir, au sens de l’OMS, deux handicaps distincts. L’OMS distingue les handicaps mentaux et psychiques. Le handicap mental correspond à des capacités intellectuelles plus faibles que la normale, avec des causes identifiables. Donc sont considérées comme porteurs de handicap mental, par exemple, les personnes atteintes de trisomie 21, ou d’autisme. Le handicap psychique, quant à lui, correspond plus au résultat d’une pathologie psychique dont les causes sont souvent méconnues, et qui nécessitent la prise de médicaments, mais qui par contre préservent les capacités intellectuelles du malade. Donc c’est le cas des personnes porteuses de troubles maniaco-dépressifs, troubles bipolaires, de schizophrénie, ou de ce type de maladie.
+
+        h3 Aurélien :
+
+        p Très bien, et du coup est-ce que vous me confirmez le fait que la dyslexie c’est bien une maladie cognitive, c’est un handicap cognitif ?
+
+        h3 Aymeric :
+
+        p Alors du coup, les troubles dys et les troubles de l’apprentissage, ceux que t’évoques, ils sont parfois traités à part - ils sont parfois rangés dans la catégorie des handicaps mentaux, ils sont assez spécifiques parce que leur action n’affectent pas les capacités intellectuelles dans leur ensemble, mais elles ciblent uniquement une fonction cognitive particulière. C’est pourquoi on y fait parfois référence avec la terminologie de handicap cognitif que tu viens d’employer. Nous, c’est ce qu’on va faire ici, pour un peu plus de clarté, surtout qu’ils peuvent être de différents types.
+
+        h3 Aurélien :
+
+        p Très bien, donc on a vu la dyslexie par exemple, mais je suppose qu’il y a une pluralité des types de handicap cognitif - est-ce que vous pouvez en citer quelques uns ?
+
+        h3 Aymeric :
+
+        p Alors on a la dysorthographie, la dysphasie, la dyspraxie, qui correspondent aux troubles au niveau de l’acquisition du langage écrit, du développement du langage oral, du développement moteur, des fonctions visuo-spatiales, et aussi tout ce qui est lié à l’activité numérique, qui est appelé dyscalculie. Et puis aussi tout ce qui est développement des processus attentionnels et des fonctions exécutives, auxquelles ont fait référence avec les troubles de l’attention avec ou sans hyperactivité - ce sont des choses dont on parle de plus en plus dans la littérature scientifique récente.
+
+        p Les besoins des handicapés psychiques, qu’on a évoqués au début, on ne va pas les considérer plus que ça dans notre étude liée aux interfaces vocales, dans le sens où elles sont avant tout de l’ordre de l’émotionnel plus que la perception. Les personnes qui souffrent de trouble obsessionnel compulsif par exemple, qui est un trouble psychique, cherche par exemple à être rassurée, une personne bipolaire, pareil, a besoin de stabilité dans sa vie quotidienne afin de limiter les fluctuations de leur humeur qui peuvent être très importantes. 
+
+        p Donc sans rentrer dans les détails superflus, on choisira de ne pas les considérer dans le cadre de cette étude, on va plutôt s’intéresser aux porteurs de handicaps mentaux et cognitifs, qui éprouvent des besoins liés à leur perception sensorielle, au décodage de l’information et à la communication (donc la lecture de contenu, la rédaction de texte et de messages, le parcours de documents, le déchiffrage d’énoncés écrits, les déplacements physiques aussi, qui sont autant de tâches qui peuvent leur demander un effort mental important avant d’avoir accès à l’information recherchée en tant que telle. Donc l’expression des informations dans un format plus familier et plus accessible, comme un format audio, peut soulager la charge mentale qu’ils subissent lorsqu’ils ont habituellement besoin d’accéder à ces informations.
+
+        h3 Aurélien :
+
+        p D’accord, merci pour ces réponses. Donc suite à l’énoncé de ces trois grandes problématiques, ces trois handicaps, on se rend compte qu’être une personne handicapée est une situation très difficile. On sait que, du coup, une sorte de barrière sociale se crée - est-ce qu’on peut l’expliquer ici, Jacques ou Aymeric ?
+
+        h3 Jacques :
+
+        p Effectivement, donc je parlais des besoins d’égalité et d’autonomie tout à l’heure, pour les handicapés moteur, mais effectivement ces besoins sont présents pour toutes les formes de handicap. Ce n’est pas encore une réalité, cette égalité et autonomie, cette égalité d’opportunités. Il existe toujours un espace entre les personnes handicapées et non handicapées. Ça peut mener à l’isolement, à la honte, à l’impression que les personnes handicapées sont moins capables qu’elles ne le sont réellement, et donc ça peut contribuer aux problèmes dans leur inclusion au niveau social. Donc oui, on peut dire qu’une barrière sociale se forme autour d’une personne handicapée, ce qui rend l’interaction avec le monde extérieur difficile, mais comme nous allons voir, avec les avancées dans l’inclusion sociale, nous pouvons espérer briser cette barrière petit à petit.
+
+        h3 Aurélien :
+
+        p Très bien, et du coup comment va évoluer cette prise en charge grâce au numérique, grâce aux solutions techniques, comment va évoluer cette prise en charge de ces différents problèmes et de ces différents troubles qu’engendrent les barrières sociales ?
+
+        h3 Aymeric :
+
+        p La différence de prise en charge et de couverture des besoins de chaque population, elle a largement évoluée. C’est difficile de faire une généralisation dans le sens où on est face à des populations assez hétéroclites, assez disparates, mais on a quand même quelques chiffres de 2017 sur les personnes en situation de besoin d’aide à l’autonomie. Les personnes regroupées sous cette appellation sont essentiellement les personnes en situation de handicap comme on les a traitées, avec les personnes âgées, ce qui fait que c’est un chiffre à considérer avec cette attention là, mais qui peut tout de même nous donner quelques indications. Les femmes de cette population ont, entre 2000 et 2013, gagné 2,1 ans d’espérance de vie, et 2,7 pour les hommes, ce qui n’est quand même pas rien. De plus, il est prévu qu’il y ait plus d’un demi million de bénéficiaires de l’allocation personnalisée d’autonomie en plus d’ici 2040, qui est une allocation versée à toutes les personnes de cette population qu’on a évoquée.
+
+        h3 Jacques :
+
+        p En plus des aides financières, on peut observer de nets progrès grâce aux avancées technologiques, qui permettent de développer des solutions ou des mécanismes de compensation qui pallient aux besoins des personnes handicapées. Les outils dont nous allons parler tout à l’heure aident réellement avec l’inclusion de ces personnes dans la société, en leur redonnant une certaine partie de leur autonomie, ce qui contribue donc à briser cette barrière sociale dont on parlait tout à l’heure.
+
+        h3 Aurélien :
+
+        p Très bien, merci, c’est la fin de cette première partie du podcast, et dans la partie deux nous allons voir les évolutions numériques, et voir si la voix est une aide pour l’inclusion sociale.
+
 //- script(type='text/javascript' src='ts/app.ts' defer)
